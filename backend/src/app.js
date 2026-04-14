@@ -1,0 +1,14 @@
+const express=require('express');
+const cors=require('cors');
+const authRoute=require('./routes/auth.route');
+const userRoute=require('./routes/user.route');
+const categoryRoute=require('./routes/category.route');
+const errorMiddleware = require('./middlewares/error.middleware');
+const app=express();
+app.use(express.json());
+app.use(cors());
+app.use('/api/auth',authRoute);
+app.use('/api/users',userRoute);
+app.use('/api/categories',categoryRoute);
+app.use(errorMiddleware);
+module.exports=app;
