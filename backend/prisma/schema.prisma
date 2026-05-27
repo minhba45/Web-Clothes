@@ -25,7 +25,6 @@ enum OrderStatus {
   CANCELLED
 }
 
-// Thêm enum cho thanh toán
 enum PaymentStatus {
   UNPAID
   PAID
@@ -74,8 +73,6 @@ model Product {
   @@index([name])
   @@map("products")
 }
-
-// 2. Thêm model ProductVariant (Size, Màu, Stock)
 model ProductVariant {
   id        Int      @id @default(autoincrement())
   productId Int
@@ -89,12 +86,11 @@ model ProductVariant {
   cartItems CartItem[]
   orderItems OrderItem[]
 
-  @@unique([productId, size, color]) // Tránh trùng lặp biến thể của cùng 1 sản phẩm
+  @@unique([productId, size, color]) 
   @@map("product_variants")
 }
 
 model Cart {
-  // ... (Giữ nguyên như của bạn)
   id        Int        @id @default(autoincrement())
   userId    Int        @unique
   createdAt DateTime   @default(now())
@@ -123,7 +119,6 @@ model CartItem {
 }
 
 model Voucher {
-  // ... (Giữ nguyên như của bạn, phần này bạn làm rất tốt)
   id            Int          @id @default(autoincrement())
   code          String       @unique @db.VarChar(50)
   discountType  DiscountType
