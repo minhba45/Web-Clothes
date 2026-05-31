@@ -62,6 +62,7 @@ model Product {
   description String?
   price       Decimal  @db.Decimal(12, 2)
   imageUrl    String?
+  galleryUrls String[] @default([])
   isActive    Boolean  @default(true)
 
   createdAt   DateTime @default(now())
