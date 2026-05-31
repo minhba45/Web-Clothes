@@ -1,11 +1,9 @@
 const { verifyToken } = require("../utils/jwt");
-const { ApiError } = require("../utils/ApiError"); // Import ApiError để đồng bộ
-
+const { ApiError } = require("../utils/ApiError"); 
 const validateRegister = (req, res, next) => {
     const { name, email, password } = req.body;
     
     if (!name || !email || !password) {
-        // Thay vì res.json, ném lỗi ra để Global Error Handler xử lý
         return next(new ApiError(400, "Email, name, password are required"));
     }
     
@@ -41,5 +39,10 @@ const authMiddleware = (req, res, next) => {
         return next(new ApiError(401, "Invalid or expired token"));
     }
 };
-
-module.exports = { validateLogin, validateRegister, authMiddleware };
+const restrictToAdmin = (req, res, next) => {
+    if (req.user.role !== "ADMIN") {
+        return next(new ApiError(403, "Bạn không có quyền thực hiện hành động này!"));
+    }
+    next(); 
+};
+module.exports = { validateLogin, validateRegister, authMiddleware,restrictToAdmin };
